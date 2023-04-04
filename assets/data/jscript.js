@@ -1,3 +1,6 @@
+var blnOption;
+var err;
+
 function getMenu() {
     // set variables
     var url = window.location.pathname;
@@ -33,39 +36,83 @@ function getMenu() {
 }
 
 function getSemester() {
-    // setup variables
+    // set variables
     var semesterId = document.getElementById('semesterList');
     var option = document.createElement('option');
 
-    // add placeholder option
+    // add a placeholder option
     option.value = 0;
-    option.text = 'Select a semester';
+    option.text = 'Select a Semester';
     semesterId.add(option);
 
     // populate semester list from array
-    for (var x = 0;  x < arySemesters.length; x++) {
-         opt = document.createElement('option');
-         opt.value = arySemesters[x][0];
-         opt.text = arySemesters[x][1];
-         semesterId.add(opt);
+    for (x = 0; x < arySemesters.length; x++) {
+        option = document.createElement('option');
+        option.value = arySemesters[x][0];
+        option.text = arySemesters[x][1];
+        semesterId.add(option);
     }
 }
 
 function getClass(objSemester) {
-    // setup variables
+    // set variables
     var semesterId = objSemester.options[objSemester.selectedIndex].value;
     var aryClasses = eval(`ary${semesterId}`);
     var classId = document.getElementById('classList');
     var option = document.createElement('option');
 
-    // populate class list from array
-    for (var x = 0;  x < aryClasses.length; x++) {
-        opt = document.createElement('option');
-        opt.value = aryClasses[x][0];
-        opt.text = aryClasses[x][1];
-        classId.add(opt);
-   }
+    // reset class list
+    classId.length = 0;
 
+    if(blnOption) {
+        // add a placeholder option
+        option.value = 0;
+        option.text = 'Select a Class';
+        classId.add(option);
+    }
 
+    //populate class list from array
+    for (x = 0; x < aryClasses.length; x++) {
+        var option = document.createElement('option');
+        option.value = aryClasses[x][0];
+        option.text = aryClasses[x][1];
+        classId.add(option);
+    }
 }
 
+function getStudent(objClass) {
+    // set variables
+    var classId = objClass.options[objClass.selectedIndex].value;
+    var aryStudents = eval(`ary${classId}`);
+    var studentId = document.getElementById('studentList');
+
+    // reset student list
+    studentId.length = 0;
+
+    // populate student list from array
+    for (x = 0; x < aryStudents.length; x++) {
+        var option = document.createElement('option');
+        option.value = aryStudents[x][0];
+        option.text = aryStudents[x][1];
+        studentId.add(option);
+    }
+}
+
+function getStudentTable(objClass) {
+    // set variables
+    var classId = objClass.options[objClass.selectedIndex].value;
+    var aryStudents = eval(`ary${classId}`);
+    var studentId = document.getElementById('studentList');
+
+    // reset student list
+    studentId.innerHTML = '';
+
+    // populate student list from array
+    for (x = 0; x < aryStudents.length; x++) {
+        var row = studentId.insertRow(x);
+        var cell0 = row.insertCell(0);
+        var cell1 = row.insertCell(1);
+        cell0.innerHTML = aryStudents[x][1];
+        cell1.innerHTML = `<input type="checkbox" id="${aryStudents[x][0]}" value="${aryStudents[x][1]}" onclick="setAttendance(this)">`;
+    }
+}

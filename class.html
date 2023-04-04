@@ -53,45 +53,46 @@
 <script src="./assets/data/jscript.js"></script>
 <script>
 
+    blnOption = false;
     getMenu();
     getSemester();
-    function deleteClass() {
-            //setup variables
-            var classIndex = document.getElementById('classList').selectedIndex;
-            var semesterId = document.querySelector('#semesterList').selectedOption[0].value;
-            var ary = eval(`ary${semesterId}`);
 
-            //validate that class is selected
-            if (classIndex < 0) {
+    function deleteClass() {
+        // set variables
+        var classIndex = document.getElementById("classList").selectedIndex;
+        var semesterId = document.querySelector('#semesterList').selectedOptions[0].value;
+        var ary = eval(`ary${semesterId}`);
+
+        // validate that class is selected
+        if (classIndex < 0) {
             alert('Please select the class you want to delete.');
             return;
-            } 
-            
-            // remove class from array and redisplay list
-            ary.splice(classIndex, 1);
-            getClass(document.getElementById('semesterList'));
-}
+        }
 
+        // remove class from array and redisplay list
+        ary.splice(semesterId, 1);
+        getClass(document.getElementById('semesterList'));
+    }
 
     function addClass() {
-            //setup variables
-            var semesterId = document.querySelector('#semesterList').selectedOptions[0].value;
-// another way of getting the semesterId
-// var semesterId = document.getElementById('semesterList')[document.getElementById('semesterList').selectedIndex].value;
-var className = document.getElementById('className').value;
-var sectionNumber = document.getElementById('sectionNumber').value;
-var ary = eval(`ary${semesterId}`);
+        // set up variables
+        var semesterId = document.querySelector('#semesterList').selectedOptions[0].value;
+        // another way of getting the semesterId
+        // var semesterId = document.getElementById('semesterList')[document.getElementById('semesterList').selectedIndex].value;
+        var className = document.getElementById('className').value;
+        var sectionNumber = document.getElementById('sectionNumber').value;
+        var ary = eval(`ary${semesterId}`);
 
-// push new class to array
-var newAry = ary.push([`${sectionNumber}`,`${className} ${sectionNumber}`]);
+        // push new class to array
+        var newAry = ary.push([`${sectionNumber}`,`${className} ${sectionNumber}`]);
 
-// reset input fields
-document.getElementById('className').value = '';
-document.getElementById('sectionNumber').value = '';
-
-// reload page with new values
-getClass(document.getElementById('semesterList'));
-
+        // reset input fields
+        document.getElementById('className').value = '';
+        document.getElementById('sectionNumber').value = '';
+        
+        // reload page with new values
+        getClass(document.getElementById('semesterList'));
     }
+
 </script>
 </html>
